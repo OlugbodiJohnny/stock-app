@@ -9,7 +9,6 @@ import java.io.IOException;
 
 public class TickerResponseSerializer extends JsonSerializer<TickerResponse> {
 
-
     @Override
     public void serialize(TickerResponse value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
