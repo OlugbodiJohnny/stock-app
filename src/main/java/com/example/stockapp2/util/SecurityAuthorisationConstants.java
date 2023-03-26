@@ -23,8 +23,6 @@ public class SecurityAuthorisationConstants {
             "/api/auth/reset-security-details/**",
             "/api/auth/security-questions",
             "/api/auth/verify-email/**",
-            "/api/subscription/confirm", //TODO     Remove on production
-            "/api/subscription/confirm/", //TODO     Remove on production
             "/ws-message",
             "/api/payment/callback",
             "/api/payment/check",
