@@ -1,1 +1,1 @@
-web: java -jar -Dserver.port=$PORT <your-application-name>.jar
+web: java -jar -Dserver.port=$PORT stock-app-2-0.0.1-SNAPSHOT.jar
