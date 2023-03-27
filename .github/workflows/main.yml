@@ -1,46 +1,48 @@
-name: Build and Deploy
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+#name: Build and Deploy
+#on:
+#  push:
+#    branches: [ main ]
+#  pull_request:
+#    branches: [ main ]
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#    steps:
+#     - uses: actions/checkout@v2
+#     - name: Set up JDK 17
+#       uses: actions/setup-java@v2
+#       with:
+#        java-version: '17'
+#        distribution: 'adopt'
+#        architecture: x64
+#     - name: Build with Maven
+#       run: mvn -B package --file pom.xml -Dspring.profiles.active=prod
+#     - name: Configure AWS Credentials
+#       uses: aws-actions/configure-aws-credentials@v2
+#       with:
+#        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#        aws-region: us-east-1
+#     - name: Install AWS CLI and EB CLI
+#       run: |
+#        sudo apt-get update
+#        sudo apt-get install -y python3-pip
+#        sudo pip3 install awscli
+#        sudo pip3 install awsebcli
+#     - name: Deploy to Elastic Beanstalk
+#       run: |
+#        eb init --platform "Corretto 17 running on 64bit Amazon Linux 2" --region us-east-1 --keyname ${{ secrets.AWS_ACCESS_KEY_ID }}
+#        eb deploy --staged --timeout 30
+#       shell: /usr/bin/bash -e {0}
+#       env:
+#        JAVA_HOME: /opt/hostedtoolcache/Java_Adopt_jdk/17.0.6-10/x64
+#        AWS_DEFAULT_REGION: us-east-1
+#        AWS_REGION: us-east-1
+#        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-     - uses: actions/checkout@v2
-     - name: Set up JDK 17
-       uses: actions/setup-java@v2
-       with:
-        java-version: '17'
-        distribution: 'adopt'
-        architecture: x64
-     - name: Build with Maven
-       run: mvn -B package --file pom.xml -Dspring.profiles.active=prod
-     - name: Configure AWS Credentials
-       uses: aws-actions/configure-aws-credentials@v2
-       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
-     - name: Install AWS CLI and EB CLI
-       run: |
-        sudo apt-get update
-        sudo apt-get install -y python3-pip
-        sudo pip3 install awscli
-        sudo pip3 install awsebcli
-     - name: Deploy to Elastic Beanstalk
-       run: |
-        eb init --platform "Corretto 17 running on 64bit Amazon Linux 2" --region us-east-1 --keyname ${{ secrets.AWS_ACCESS_KEY_ID }} 
-        eb deploy --staged --timeout 30
-       shell: /usr/bin/bash -e {0}
-       env:
-        JAVA_HOME: /opt/hostedtoolcache/Java_Adopt_jdk/17.0.6-10/x64
-        AWS_DEFAULT_REGION: us-east-1
-        AWS_REGION: us-east-1
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 #      - name: Deploy to Elastic Beanstalk
 #        uses: nohmad/elastic-beanstalk-action@master
 #        with:
