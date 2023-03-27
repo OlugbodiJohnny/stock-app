@@ -24,10 +24,10 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-region: us-east-1
      - name: Install AWS CLI
-        run: |
-         sudo apt-get update
-         sudo apt-get install -y python3-pip
-         sudo pip3 install awscli
+       run: |
+        sudo apt-get update
+        sudo apt-get install -y python3-pip
+        sudo pip3 install awscli
      - name: Deploy to Elastic Beanstalk
        run: |
         eb init --region us-east-1 --platform Java --keyname ${{ secrets.AWS_ACCESS_KEY_ID }} --interactive=false 
