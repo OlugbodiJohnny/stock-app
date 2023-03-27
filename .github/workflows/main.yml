@@ -19,20 +19,10 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml -Dspring.profiles.active=prod
       - name: Deploy to Elastic Beanstalk
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/beanstalk-deploy@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      - name: Create source bundle
-        run: |
-          mkdir -p ${{ github.workspace }}/build
-          cd ${{ github.workspace }}/target
-          zip -r ../build/application.zip ./*
-      - name: Deploy to Elastic Beanstalk
-        uses: aws-actions/amazon-elastic-beanstalk-deploy@v1
-        with:
-          application-name: my-application
-          environment-name: my-environment
-          version-label: ${{ github.sha }}
-          source-bundle: file://${{ github.workspace }}/build/application.zip
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: my-application
+          environment_name: my-environment
+          region: us-east-1
