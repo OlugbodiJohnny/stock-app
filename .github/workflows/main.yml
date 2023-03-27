@@ -18,15 +18,23 @@ jobs:
           architecture: x64
       - name: Build with Maven
         run: mvn -B package --file pom.xml -Dspring.profiles.active=prod
-      - name: Generate deployment package
-        run: zip -r deploy.zip . -x '*.git*'
       - name: Deploy to Elastic Beanstalk
-        uses: einaregilsson/beanstalk-deploy@v20
-        with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: ${{ secrets.AWS_APPLICATION_NAME }}
-          environment_name: ${{ secrets.AWS_ENVIRONMENT_NAME }}
-          version_label: ${{ github.sha }}
-          region: us-east-1
-          deployment_package: deploy.zip
+          uses: nohmad/elastic-beanstalk-action@master
+          with:
+            sub-command: deploy
+            environment: ${{ secrets.AWS_ENVIRONMENT_NAME }}
+            optional-args: '--nohang'
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#      - name: Generate deployment package
+#        run: zip -r deploy.zip . -x '*.git*'
+#      - name: Deploy to Elastic Beanstalk
+#        uses: einaregilsson/beanstalk-deploy@v20
+#        with:
+#          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          application_name: ${{ secrets.AWS_APPLICATION_NAME }}
+#          environment_name: ${{ secrets.AWS_ENVIRONMENT_NAME }}
+#          version_label: ${{ github.sha }}
+#          region: us-east-1
+#          deployment_package: deploy.zip
