@@ -32,7 +32,7 @@ jobs:
         sudo pip3 install awsebcli
      - name: Deploy to Elastic Beanstalk
        run: |
-        eb init --region us-east-1 --platform Java --keyname ${{ secrets.AWS_ACCESS_KEY_ID }} --interactive=false 
+        eb init --region us-east-1 --platform Java --keyname ${{ secrets.AWS_ACCESS_KEY_ID }} 
         eb deploy --staged --timeout 30
 #      - name: Deploy to Elastic Beanstalk
 #        uses: nohmad/elastic-beanstalk-action@master
