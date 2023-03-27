@@ -32,7 +32,7 @@ jobs:
         sudo pip3 install awsebcli
      - name: Deploy to Elastic Beanstalk
        run: |
-         eb init --platform "Corretto 17 running on 64bit Amazon Linux 2" --region us-east-1 --keyname ${{ secrets.AWS_ACCESS_KEY_ID }} 
+        eb init --platform "Corretto 17 running on 64bit Amazon Linux 2" --region us-east-1 --keyname ${{ secrets.AWS_ACCESS_KEY_ID }} 
         eb deploy --staged --timeout 30
        shell: /usr/bin/bash -e {0}
        env:
