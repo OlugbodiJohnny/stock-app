@@ -18,14 +18,28 @@ jobs:
           architecture: x64
       - name: Build with Maven
         run: mvn -B package --file pom.xml -Dspring.profiles.active=prod
-      - name: Deploy to Elastic Beanstalk
-        uses: nohmad/elastic-beanstalk-action@master
+      - uses: aws-actions/configure-aws-credentials@v1
         with:
-          sub-command: deploy
-          environment: ${{ secrets.AWS_ENVIRONMENT_NAME }}
-          optional-args: '--nohang'
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          sudo pip3 install awscli
+      - name: Deploy to Elastic Beanstalk
+      run: |
+        eb init --region us-east-1 --platform Java --keyname ${{ secrets.AWS_ACCESS_KEY_ID }} --interactive=false 
+        eb deploy --staged --timeout 30
+#      - name: Deploy to Elastic Beanstalk
+#        uses: nohmad/elastic-beanstalk-action@master
+#        with:
+#          sub-command: deploy
+#          environment: ${{ secrets.AWS_ENVIRONMENT_NAME }}
+#          optional-args: '--nohang'
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 #      - name: Generate deployment package
 #        run: zip -r deploy.zip . -x '*.git*'
 #      - name: Deploy to Elastic Beanstalk
