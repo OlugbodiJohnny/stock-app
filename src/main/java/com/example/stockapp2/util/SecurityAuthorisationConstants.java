@@ -39,6 +39,5 @@ public class SecurityAuthorisationConstants {
             "/api/notify-mobile-originated-message",
             "/api/subscribe",
             "/api/sync-exchange",
-            "/api/sync-exchange/"
     };
 }
