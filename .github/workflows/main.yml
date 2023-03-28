@@ -45,7 +45,7 @@ jobs:
         version_label: ${{ github.sha }}
         deployment_package: deploy.zip
       env:
-        APP_ENV: prod
+        SPRING_PROFILES_ACTIVE: prod
         JAR_NAME: $(ls *.jar)
         PORT_NUMBER: ${{ secrets.PORT_NUMBER }}
 
