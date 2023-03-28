@@ -28,8 +28,7 @@ jobs:
 
     - name: Create Procfile
       run: |
-        echo "web: java -jar $(ls *.jar) --spring.config.name=application-prod" > Procfile
-        echo "PORT: ${{ secrets.SERVER_PORT }}" >> .env
+        echo "web: java -jar $(ls *.jar) --server.port=${{ secrets.SERVER_PORT }} --spring.config.name=application-prod" > Procfile
       working-directory: ${{ github.workspace }}
 
     - name: Generate deployment package
