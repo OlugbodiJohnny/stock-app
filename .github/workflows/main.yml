@@ -9,43 +9,42 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        -
+    - uses: actions/checkout@v2
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
-        with:
-          java-version: '17'
-          distribution: 'adopt'
-          architecture: x64
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'adopt'
+        architecture: x64
 
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml -Dspring.profiles.active=prod
-        working-directory: ${{ github.workspace }}
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml -Dspring.profiles.active=prod
+      working-directory: ${{ github.workspace }}
 
-      - name: Move JAR to root directory
-        run: mv target/*.jar ./
-        working-directory: ${{ github.workspace }}
+    - name: Move JAR to root directory
+      run: mv target/*.jar ./
+      working-directory: ${{ github.workspace }}
 
-      - name: Create Procfile
-        run: |
-          echo "web: java -jar $(ls *.jar)" > Procfile
-        working-directory: ${{ github.workspace }}
+    - name: Create Procfile
+      run: |
+        echo "web: java -jar $(ls *.jar)" > Procfile
+      working-directory: ${{ github.workspace }}
 
-      - name: Deploy to Elastic Beanstalk
-        uses: einaregilsson/beanstalk-deploy@v15
-        with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          application_name: ${{ secrets.AWS_APPLICATION_NAME }}
-          environment_name: ${{ secrets.AWS_ENVIRONMENT_NAME }}
-          region: us-east-1
-          version_label: ${{ github.sha }}
-        env:
-          APP_ENV: prod
-          JAR_NAME: $(ls *.jar)
-          PORT_NUMBER: ${{ secrets.PORT_NUMBER }}
-        working-directory: ${{ github.workspace }}
+    - name: Deploy to Elastic Beanstalk
+      uses: einaregilsson/beanstalk-deploy@v15
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+        application_name: ${{ secrets.AWS_APPLICATION_NAME }}
+        environment_name: ${{ secrets.AWS_ENVIRONMENT_NAME }}
+        region: us-east-1
+        version_label: ${{ github.sha }}
+      env:
+        APP_ENV: prod
+        JAR_NAME: $(ls *.jar)
+        PORT_NUMBER: ${{ secrets.PORT_NUMBER }}
+      working-directory: ${{ github.workspace }}
 
 
 #     - name: Configure AWS Credentials
