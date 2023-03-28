@@ -44,6 +44,7 @@ jobs:
         APP_ENV: prod
         JAR_NAME: $(ls *.jar)
         PORT_NUMBER: ${{ secrets.PORT_NUMBER }}
+      working-directory: ${{ github.workspace }}
 
 
 #     - name: Configure AWS Credentials
