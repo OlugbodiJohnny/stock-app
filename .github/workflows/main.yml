@@ -45,9 +45,6 @@ jobs:
         region: us-east-1
         version_label: ${{ github.sha }}
         deployment_package: deploy.zip
-        env_vars: |
-          SERVER_PORT=${{ secrets.SERVER_PORT }}
-          PORT=${{ secrets.SERVER_PORT }}
 
 
 #     - name: Configure AWS Credentials
