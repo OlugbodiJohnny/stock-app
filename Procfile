@@ -1,1 +1,1 @@
-web: java -jar stock-app-2-0.0.1-SNAPSHOT.jar --server.port=${PORT_NUMBER}
+web: java -jar -Dspring.profiles.active=${SPRING_PROFILES_ACTIVE} stock-app-2-0.0.1-SNAPSHOT.jar --server.port=${PORT_NUMBER}
