@@ -28,7 +28,8 @@ jobs:
 
     - name: Create Procfile
       run: |
-        echo "web: java -jar $(ls *.jar) --server.port=${{ secrets.SERVER_PORT }} --spring.config.name=application-prod" > Procfile
+        echo "web: java -jar $(ls *.jar) --spring.config.name=application-prod" > Procfile
+        echo "PORT: ${{ secrets.SERVER_PORT }}" >> .env
       working-directory: ${{ github.workspace }}
 
     - name: Generate deployment package
@@ -44,6 +45,9 @@ jobs:
         region: us-east-1
         version_label: ${{ github.sha }}
         deployment_package: deploy.zip
+        env_vars: |
+          SERVER_PORT=${{ secrets.SERVER_PORT }}
+          PORT=${{ secrets.SERVER_PORT }}
 
 
 #     - name: Configure AWS Credentials
