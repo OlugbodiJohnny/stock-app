@@ -27,8 +27,8 @@ jobs:
         working-directory: ${{ github.workspace }}
 
       - name: Create Procfile
-        run:
-        echo "web: java -jar $(ls *.jar)" > Procfile
+        run: |
+          echo "web: java -jar $(ls *.jar)" > Procfile
         working-directory: ${{ github.workspace }}
 
       - name: Deploy to Elastic Beanstalk
@@ -45,6 +45,7 @@ jobs:
           JAR_NAME: $(ls *.jar)
           PORT_NUMBER: ${{ secrets.PORT_NUMBER }}
         working-directory: ${{ github.workspace }}
+
 
 #     - name: Configure AWS Credentials
 #       uses: aws-actions/configure-aws-credentials@v2
