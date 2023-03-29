@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
             //generating otp
             return new ResponseEntity<>(new HttpResponseDto(HttpStatus.OK, ENTITY, "Registration was successful", savedUser), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new HttpResponseDto(HttpStatus.EXPECTATION_FAILED, ENTITY, "registration was unsuccessful"), HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(new HttpResponseDto(HttpStatus.EXPECTATION_FAILED, ENTITY, "registration was unsuccessful", e.getMessage(), e.getStackTrace()[0].toString(), null), HttpStatus.EXPECTATION_FAILED);
         }
     }
 
@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
                     userDetails.getEmail(),
                     roles)), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new HttpResponseDto(HttpStatus.EXPECTATION_FAILED, ENTITY, "login was unsuccessful"), HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(new HttpResponseDto(HttpStatus.EXPECTATION_FAILED, ENTITY, "login was unsuccessful", e.getMessage(), e.getStackTrace()[0].toString(), null), HttpStatus.EXPECTATION_FAILED);
         }
     }
 }

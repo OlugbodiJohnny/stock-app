@@ -34,7 +34,7 @@ public class StockServiceImpl implements StockService {
             return new ResponseEntity<>(new HttpResponseDto(HttpStatus.OK,ENTITY,"Stocks fetched",response.getResults()),HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(new HttpResponseDto(HttpStatus.EXPECTATION_FAILED, ENTITY, "Error retrieving stocks"), HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(new HttpResponseDto(HttpStatus.EXPECTATION_FAILED, ENTITY, "Error retrieving stocks", e.getMessage(), e.getStackTrace()[0].toString(), null), HttpStatus.EXPECTATION_FAILED);
         }
     }
 
@@ -45,7 +45,7 @@ public class StockServiceImpl implements StockService {
             PolygonResponse<TickerResponse> response = restTemplate.getForObject(url, PolygonResponse.class);
             return new ResponseEntity<>(new HttpResponseDto(HttpStatus.OK,ENTITY,"Stocks fetched",response.getResults().get(0)),HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new HttpResponseDto(HttpStatus.NOT_FOUND, ENTITY, "Stock not found"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new HttpResponseDto(HttpStatus.NOT_FOUND, ENTITY, "Stock not found", e.getMessage(), e.getStackTrace()[0].toString(), null), HttpStatus.NOT_FOUND);
         }
     }
 }

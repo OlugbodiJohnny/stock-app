@@ -61,7 +61,7 @@ public class StockLikesServiceImpl implements StockLikesService {
                 stock.setLast_updated_utc(dateTime);
                 stock.setLikes(1);
             }else {
-                return new ResponseEntity<>(new HttpResponseDto(HttpStatus.NOT_FOUND, ENTITY, "Stock with given symbol/ticker was not found", stock), HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(new HttpResponseDto(HttpStatus.NOT_FOUND, ENTITY, "Stock with given symbol/ticker was not found", null), HttpStatus.NOT_FOUND);
             }
         } else {
             stock.setLikes(stock.getLikes() + 1);
