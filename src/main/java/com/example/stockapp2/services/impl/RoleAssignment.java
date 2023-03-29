@@ -30,6 +30,10 @@ public class RoleAssignment {
                                 .orElseThrow(() -> new ApiResourceNotFoundException("Error: Role not found"));
                         roles.add(user);
                         break;
+                    case "role_dev":
+                        Authority dev = roleRepository.findByName(AuthoritiesConstants.DEV)
+                                .orElseThrow(() -> new ApiResourceNotFoundException("Error: Role not found"));
+                        roles.add(dev);
                     default:
                         Authority defaultAuthority = roleRepository.findByName(AuthoritiesConstants.USER)
                                 .orElseThrow(() -> new ApiResourceNotFoundException("Error: Role not found"));

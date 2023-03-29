@@ -1,5 +1,6 @@
 package com.example.stockapp2.config.securityConfig;
 
+import com.example.stockapp2.constants.AuthoritiesConstants;
 import com.example.stockapp2.security.jwt.AuthEntryPointJwt;
 import com.example.stockapp2.security.jwt.AuthTokenFilter;
 import com.example.stockapp2.security.service.UserDetailsServiceImpl;
@@ -73,19 +74,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-       http
-               .csrf().disable()
-               .exceptionHandling()
-               .authenticationEntryPoint(unauthorizedHandler).and()
-               .sessionManagement()
-               .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
-               .cors()
-               .configurationSource(corsConfigurationSource())
-               .and()
-               .authorizeRequests()
-               .antMatchers("/api/auth/login").permitAll()
-//               .antMatchers("/swagger-ui/index.html/**").permitAll()
-//               .hasAuthority(AuthoritiesConstants.DEV)
+        http
+                .csrf().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(unauthorizedHandler).and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
+                .cors()
+                .configurationSource(corsConfigurationSource())
+                .and()
+                .authorizeRequests()
+                .antMatchers("/auth/login").permitAll()
+                .antMatchers("/swagger-ui/index.html/**").hasAuthority(AuthoritiesConstants.DEV)
                .antMatchers(SecurityAuthorisationConstants.PUBLIC_URIS).permitAll()
 //               .antMatchers("/api/subscription/confirm").access(ipAddresses)
 //               .antMatchers("/api/subscription/confirm/").access(ipAddresses)

@@ -24,7 +24,7 @@ public class AuthController {
     }
 
 //    @SecurityRequirement(name = "jwt")
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<?> login (@RequestBody LoginReq loginReq) {
         return userService.login(loginReq);
     }

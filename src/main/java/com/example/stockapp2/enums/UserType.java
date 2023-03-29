@@ -1,5 +1,6 @@
 package com.example.stockapp2.enums;
 
-public enum UserType   {
-    USER
+public enum UserType {
+    USER,
+    DEV
 }
