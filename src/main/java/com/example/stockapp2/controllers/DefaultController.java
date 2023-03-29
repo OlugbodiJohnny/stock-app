@@ -2,6 +2,7 @@ package com.example.stockapp2.controllers;
 
 import com.example.stockapp2.security.jwt.JwtUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +21,7 @@ import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class DefaultController {
 
     private final AuthenticationManager authenticationManager;
@@ -58,6 +60,8 @@ public class DefaultController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
         session.setAttribute("USER", jwt);
+        log.info("swagger login successful");
+        log.info("redirecting user to {}",swaggerUrl);
         response.sendRedirect(swaggerUrl);
 
         return "403";
