@@ -18,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -46,46 +45,50 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<?> registerUser(RegisterUserReq registerUserReq) {
-        log.info("full name is : {}", registerUserReq.getFullName());
-        if (registerUserReq.getFullName().split(" ").length < 2)
-            throw new ApiBadRequestException("Please provide first and last name seperated by a space");
-        User user = new User();
-        user.setEmail(registerUserReq.getEmail().toLowerCase());
-        user.setPassword(passwordEncoder.encode(registerUserReq.getPassword()));
-        user.setFullName(registerUserReq.getFullName());
-        Set<String> stringList = new HashSet<>(List.of(AuthoritiesConstants.USER));
-        Set<Authority> roleList = roleAssignment.assignRole(stringList, roleRepository);
-        user.setAuthorities(roleList);
-        User savedUser = userRepository.save(user);
-        log.info("user was registered");
-        //send notification to email
-        //generating otp
-        return new ResponseEntity<>(new HttpResponseDto(HttpStatus.OK,ENTITY,"Registration was successful",savedUser),HttpStatus.OK);
+        try {
+            log.info("full name is : {}", registerUserReq.getFullName());
+            if (registerUserReq.getFullName().split(" ").length < 2)
+                throw new ApiBadRequestException("Please provide first and last name seperated by a space");
+            User user = new User();
+            user.setEmail(registerUserReq.getEmail().toLowerCase());
+            user.setPassword(passwordEncoder.encode(registerUserReq.getPassword()));
+            user.setFullName(registerUserReq.getFullName());
+            Set<String> stringList = new HashSet<>(List.of(AuthoritiesConstants.USER));
+            Set<Authority> roleList = roleAssignment.assignRole(stringList, roleRepository);
+            user.setAuthorities(roleList);
+            User savedUser = userRepository.save(user);
+            log.info("user was registered");
+            //send notification to email
+            //generating otp
+            return new ResponseEntity<>(new HttpResponseDto(HttpStatus.OK, ENTITY, "Registration was successful", savedUser), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new HttpResponseDto(HttpStatus.EXPECTATION_FAILED, ENTITY, "registration was unsuccessful"), HttpStatus.EXPECTATION_FAILED);
+        }
     }
 
     @Override
     public ResponseEntity<?> login (LoginReq loginReq) {
-        loginReq.setEmail(loginReq.getEmail().toLowerCase());
-        log.info("authenticating user");
-        Authentication authentication;
-
         try {
-            authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginReq.getEmail(), loginReq.getPassword()));
-        }catch (BadCredentialsException e) {
-            throw new ApiBadRequestException("Invalid credentials");
-        }
+            loginReq.setEmail(loginReq.getEmail().toLowerCase());
+            log.info("authenticating user");
+            Authentication authentication;
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
-        log.info("user authenticated");
-        log.info("returning  token");
-        return new ResponseEntity<>(new HttpResponseDto(HttpStatus.OK,ENTITY,"Login was successful",new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getEmail(),
-                roles)),HttpStatus.OK);
+            authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginReq.getEmail(), loginReq.getPassword()));
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = jwtUtils.generateJwtToken(authentication);
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            List<String> roles = userDetails.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .collect(Collectors.toList());
+            log.info("user authenticated");
+            log.info("returning  token");
+            return new ResponseEntity<>(new HttpResponseDto(HttpStatus.OK, ENTITY, "Login was successful", new JwtResponse(jwt,
+                    userDetails.getId(),
+                    userDetails.getEmail(),
+                    roles)), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new HttpResponseDto(HttpStatus.EXPECTATION_FAILED, ENTITY, "login was unsuccessful"), HttpStatus.EXPECTATION_FAILED);
+        }
     }
 }

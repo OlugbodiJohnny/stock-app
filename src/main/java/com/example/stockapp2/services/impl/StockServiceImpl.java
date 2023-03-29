@@ -3,8 +3,6 @@ package com.example.stockapp2.services.impl;
 import com.example.stockapp2.dto.response.HttpResponseDto;
 import com.example.stockapp2.dto.response.PolygonResponse;
 import com.example.stockapp2.dto.response.TickerResponse;
-import com.example.stockapp2.exceptions.ApiBadRequestException;
-import com.example.stockapp2.exceptions.ApiResourceNotFoundException;
 import com.example.stockapp2.services.StockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +34,7 @@ public class StockServiceImpl implements StockService {
             return new ResponseEntity<>(new HttpResponseDto(HttpStatus.OK,ENTITY,"Stocks fetched",response.getResults()),HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ApiBadRequestException("Error retrieving stocks");
+            return new ResponseEntity<>(new HttpResponseDto(HttpStatus.EXPECTATION_FAILED, ENTITY, "Error retrieving stocks"), HttpStatus.EXPECTATION_FAILED);
         }
     }
 
@@ -47,8 +45,7 @@ public class StockServiceImpl implements StockService {
             PolygonResponse<TickerResponse> response = restTemplate.getForObject(url, PolygonResponse.class);
             return new ResponseEntity<>(new HttpResponseDto(HttpStatus.OK,ENTITY,"Stocks fetched",response.getResults().get(0)),HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new ApiResourceNotFoundException("Stock not found");
+            return new ResponseEntity<>(new HttpResponseDto(HttpStatus.NOT_FOUND, ENTITY, "Stock not found"), HttpStatus.NOT_FOUND);
         }
     }
 }

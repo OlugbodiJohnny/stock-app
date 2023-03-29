@@ -1,7 +1,6 @@
 package com.example.stockapp2.services.impl;
 
 import com.example.stockapp2.dto.response.HttpResponseDto;
-import com.example.stockapp2.exceptions.ApiResourceNotFoundException;
 import com.example.stockapp2.models.Stock;
 import com.example.stockapp2.repositories.StockRepository;
 import com.example.stockapp2.services.StockLikesService;
@@ -62,7 +61,7 @@ public class StockLikesServiceImpl implements StockLikesService {
                 stock.setLast_updated_utc(dateTime);
                 stock.setLikes(1);
             }else {
-                throw new ApiResourceNotFoundException("Stock with given symbol/ticker was not found");
+                return new ResponseEntity<>(new HttpResponseDto(HttpStatus.NOT_FOUND, ENTITY, "Stock with given symbol/ticker was not found", stock), HttpStatus.NOT_FOUND);
             }
         } else {
             stock.setLikes(stock.getLikes() + 1);
