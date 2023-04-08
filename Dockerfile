@@ -18,10 +18,10 @@ ENV PORT 8080
 
 ENV JAVA_OPTS "-Xmx512m -Xmx256m -Xmx6G"
 
-ENTRYPOINT ["java", "-Xmx256m", "-Xmx512m", "-jar", "stock-app-2-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=docker"]
+ENTRYPOINT ["java", "-Xmx256m", "-Xmx512m", "-jar", "stock-app-2-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=prod"]
 
 # Set the image name
-LABEL maintainer="olugbodi-johnny"
-LABEL version="1.0"
-LABEL description="stock-app-2"
-LABEL name="stock-app-2"
+#LABEL maintainer="olugbodi-johnny"
+#LABEL version="1.0"
+#LABEL description="stock-app-2"
+#LABEL name="stock-app-2"

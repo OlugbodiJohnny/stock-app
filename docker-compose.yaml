@@ -2,14 +2,14 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:alpine3.17
     restart: always
     ports:
-      - "49153:5432"
+      - "49152:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgrespw
-      POSTGRES_DB: stock-app-2
+      POSTGRES_USER: olugbodijohnny@live.com
+      POSTGRES_PASSWORD: ICEmala234!@
+      POSTGRES_DB: stock-app
     command: postgres -c listen_addresses=*
     volumes:
       - postgres-data:/var/lib/postgresql/data
@@ -22,9 +22,9 @@ services:
       dockerfile: Dockerfile
     restart: always
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/stock-app-2
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgrespw
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/stock-app
+      SPRING_DATASOURCE_USERNAME: olugbodijohnny@live.com
+      SPRING_DATASOURCE_PASSWORD: ICEmala234!@
     ports:
       - "8080:8090"
     depends_on:

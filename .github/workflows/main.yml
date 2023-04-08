@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Deploy to AWS EBS
 
 on:
   push:
@@ -42,7 +42,7 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: ${{ secrets.AWS_APPLICATION_NAME }}
         environment_name: ${{ secrets.AWS_ENVIRONMENT_NAME }}
-        region: us-east-1
+        region: ${{ secrets.AWS_REGION }}
         version_label: ${{ github.sha }}
         deployment_package: deploy.zip
         wait_for_environment_recovery: 90
