@@ -9,6 +9,8 @@ COPY --from=build /app/target/stock-app-2-0.0.1-SNAPSHOT.jar stock-app-2-0.0.1-S
 
 COPY ./src/main/resources/application-prod.properties /app/application-prod.properties
 
+COPY env.list /app/
+
 # Copy the spring-boot-api-tutorial.jar from the maven stage to the /opt/app directory of the current stage.
 #COPY target/payment-gateway-demo-0.0.1-SNAPSHOT.jar .
 
