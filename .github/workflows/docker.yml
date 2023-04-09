@@ -9,8 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      DOCKER_REGISTRY: index.docker.io/v1
     steps:
       - uses: actions/checkout@v2
 
@@ -27,7 +25,7 @@ jobs:
           context: .
           dockerfile: ./Dockerfile
           push: true
-          tags: ${{ env.DOCKER_REGISTRY }}/stock-app-docker:${{ github.sha }}
+          tags: ${{ secrets.DOCKER_REGISTRY }}/jkillz234/${{ secrets.AWS_APPLICATION_NAME_DOCKER }}:${{ github.sha }}
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
