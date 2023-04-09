@@ -14,8 +14,7 @@ COPY --from=build /app/target/stock-app-2-0.0.1-SNAPSHOT.jar stock-app-2-0.0.1-S
 
 EXPOSE 8080
 
-ENV PORT 8080
-
+ENV SERVER_PORT ""
 ENV JAVA_OPTS "-Xmx512m -Xmx256m -Xmx6G"
 
 ENTRYPOINT ["java", "-Xmx256m", "-Xmx512m", "-jar", "stock-app-2-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=prod"]
