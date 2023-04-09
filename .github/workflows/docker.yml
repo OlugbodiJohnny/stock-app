@@ -55,7 +55,3 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
-
-      - name: Run Docker container
-        run: |
-          docker run -p 8080:8080 --env-file /app/env.list ${{ secrets.DOCKER_REGISTRY }}/jkillz234/${{ secrets.AWS_APPLICATION_NAME_DOCKER }}:${{ github.sha }}
