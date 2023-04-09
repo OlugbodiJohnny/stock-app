@@ -86,7 +86,6 @@ jobs:
             Namespace=aws:elasticbeanstalk:application:environment,OptionName=DEV_EMAIL,Value=${{ secrets.DEV_EMAIL }} \
             Namespace=aws:elasticbeanstalk:application:environment,OptionName=DEV_PASSWORD,Value=${{ secrets.DEV_PASSWORD }} \
             Namespace=aws:elasticbeanstalk:application:environment,OptionName=SWAGGER_URL,Value=${{ secrets.SWAGGER_URL }} \
-
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
