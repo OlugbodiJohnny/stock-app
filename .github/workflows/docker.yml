@@ -39,7 +39,7 @@ jobs:
       - name: Create and upload source bundle to S3
         run: |
           zip -r app.zip . -x "*.git*" -x "*.github*" -x "*README.md*" -x "*.gitignore*"
-          aws s3 cp app.zip s3://${{ secrets.S3_BUCKET }}/${{ secrets.AWS_APPLICATION_NAME_DOCKER }}/${{ github.sha }}.zip --region ${secrets.AWS_REGION}
+          aws s3 cp app.zip s3://${{ secrets.S3_BUCKET }}/${{ secrets.AWS_APPLICATION_NAME_DOCKER }}/${{ github.sha }}.zip --region ${{ secrets.AWS_REGION }}
 
       - name: Update Elastic Beanstalk environment
         run: |
