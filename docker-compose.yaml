@@ -1,6 +1,6 @@
-#version: '3.8'
-#
-#services:
+version: '3.8'
+
+services:
 #  postgres:
 #    image: postgres:alpine3.17
 #    restart: always
@@ -15,18 +15,18 @@
 #      - postgres-data:/var/lib/postgresql/data
 #    networks:
 #      - my-stock-app-2-network
-#
-#  springboot:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    restart: always
+
+  springboot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
 #    environment:
 #      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/stock-app
 #      SPRING_DATASOURCE_USERNAME: olugbodijohnny@live.com
 #      SPRING_DATASOURCE_PASSWORD: ICEmala234!@
-#    ports:
-#      - "8080:8090"
+    ports:
+      - "5000:5000"
 #    depends_on:
 #      - postgres
 #    networks:

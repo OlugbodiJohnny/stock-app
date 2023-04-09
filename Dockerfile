@@ -60,7 +60,7 @@ EXPOSE 5000
 #
 #ENV SWAGGER_URL ""
 
-ENV JAVA_OPTS "-Xmx512m -Xmx256m -Xmx6G"
+#ENV JAVA_OPTS "-Xmx512m -Xmx256m -Xmx6G"
 
 ENTRYPOINT ["java", "-jar", "stock-app-2-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=prod"]
 
