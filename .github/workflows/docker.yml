@@ -25,7 +25,7 @@ jobs:
           context: .
           dockerfile: ./Dockerfile
           push: true
-          tags: https://index.docker.io/v1/stock-app-docker:${{ github.sha }}
+          tags: https://index.docker.io/v1/jkillz34/stock-app-docker:${{ github.sha }}
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
