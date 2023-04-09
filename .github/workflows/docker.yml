@@ -25,7 +25,7 @@ jobs:
           context: .
           dockerfile: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.AWS_APPLICATION_NAME_DOCKER }}:${{ github.sha }}
+          tags: jkillz234/${{ secrets.AWS_APPLICATION_NAME_DOCKER }}:${{ github.sha }}
 
       - name: Install AWS CLI
         run: |
