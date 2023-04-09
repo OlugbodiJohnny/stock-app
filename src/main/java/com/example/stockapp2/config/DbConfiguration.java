@@ -41,7 +41,7 @@ public class DbConfiguration {
             dataSourceBuilder.password(password);
         }else{
             log.info("Starting up local Database............");
-
+            log.info("database url is : {}",url);
             // local environment
             dataSourceBuilder.url(url);
             if(!username.equals("")) dataSourceBuilder.username(username);
