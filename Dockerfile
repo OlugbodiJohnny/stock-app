@@ -15,7 +15,7 @@ COPY --from=build /app/target/stock-app-2-0.0.1-SNAPSHOT.jar stock-app-2-0.0.1-S
 EXPOSE 5000
 
 #ENV SERVER_PORT 5000
-
+#
 #ENV SPRING_DATASOURCE_URL ""
 #
 #ENV SPRING_DATASOURCE_USERNAME ""
@@ -59,7 +59,7 @@ EXPOSE 5000
 #ENV DEV_PASSWORD ""
 #
 #ENV SWAGGER_URL ""
-
+#
 #ENV JAVA_OPTS "-Xmx512m -Xmx256m -Xmx6G"
 
 ENTRYPOINT ["java", "-jar", "stock-app-2-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=prod"]
