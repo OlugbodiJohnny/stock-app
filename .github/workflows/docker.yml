@@ -61,7 +61,32 @@ jobs:
       - name: Update Elastic Beanstalk environment
         run: |
           aws elasticbeanstalk create-application-version --application-name ${{ secrets.AWS_APPLICATION_NAME_DOCKER }} --version-label ${{ github.sha }} --source-bundle S3Bucket=${{ secrets.S3_BUCKET }},S3Key=${{ secrets.AWS_APPLICATION_NAME_DOCKER }}/${{ github.sha }}.zip
-          aws elasticbeanstalk update-environment --environment-name ${{ secrets.AWS_ENVIRONMENT_NAME_DOCKER }} --version-label ${{ github.sha }}
+          aws elasticbeanstalk update-environment --environment-name ${{ secrets.AWS_ENVIRONMENT_NAME_DOCKER }} --version-label ${{ github.sha }} \
+            --option-settings \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SERVER_PORT,Value=${{ secrets.SERVER_PORT }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SPRING_DATASOURCE_URL,Value=${{ secrets.SPRING_DATASOURCE_URL }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SPRING_DATASOURCE_USERNAME,Value=${{ secrets.SPRING_DATASOURCE_USERNAME }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SPRING_DATASOURCE_PASSWORD,Value=${{ secrets.SPRING_DATASOURCE_PASSWORD }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT,Value=${{ secrets.SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SPRING_JPA_HIBERNATE_DDL_AUTO,Value=${{ secrets.SPRING_JPA_HIBERNATE_DDL_AUTO }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SPRING_JPA_HIBERNATE_SHOW_SQL,Value=${{ secrets.SPRING_JPA_HIBERNATE_SHOW_SQL }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SPRING_ADMIN_EMAIL,Value=${{ secrets.SPRING_ADMIN_EMAIL }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SPRING_ADMIN_PASSWORD,Value=${{ secrets.SPRING_ADMIN_PASSWORD }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SPRING_MAIL_HOST,Value=${{ secrets.SPRING_MAIL_HOST }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SPRING_MAIL_PORT,Value=${{ secrets.SPRING_MAIL_PORT }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SPRING_MAIL_USERNAME,Value=${{ secrets.SPRING_MAIL_USERNAME }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SPRING_MAIL_PASSWORD,Value=${{ secrets.SPRING_MAIL_PASSWORD }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SPRING_MAIL_SMTP_AUTH,Value=${{ secrets.SPRING_MAIL_SMTP_AUTH }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SPRING_MAIL_SMTP_STARTTLS,Value=${{ secrets.SPRING_MAIL_SMTP_STARTTLS }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SPRING_MAIL_SMTP_SLL_ENABLE,Value=${{ secrets.SPRING_MAIL_SMTP_SLL_ENABLE }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=TOKEN_EXPIRATION,Value=${{ secrets.TOKEN_EXPIRATION }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SECRET_KEY,Value=${{ secrets.SECRET_KEY }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=POLYGON_API_KEY,Value=${{ secrets.POLYGON_API_KEY }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=POLYGON_BASE_URL,Value=${{ secrets.POLYGON_BASE_URL }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=DEV_EMAIL,Value=${{ secrets.DEV_EMAIL }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=DEV_PASSWORD,Value=${{ secrets.DEV_PASSWORD }} \
+            Namespace=aws:elasticbeanstalk:application:environment,OptionName=SWAGGER_URL,Value=${{ secrets.SWAGGER_URL }} \
+
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
