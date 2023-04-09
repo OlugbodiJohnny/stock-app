@@ -12,7 +12,7 @@ COPY --from=build /app/target/stock-app-2-0.0.1-SNAPSHOT.jar stock-app-2-0.0.1-S
 
 #ARG JAR_FILE=payment-gateway-demo-0.0.1-SNAPSHOT.jar
 
-EXPOSE 8080
+EXPOSE 5000
 
 ENV SERVER_PORT 5000
 
