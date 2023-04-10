@@ -7,6 +7,8 @@ FROM openjdk:17-alpine
 
 COPY --from=build /app/target/stock-app-2-0.0.1-SNAPSHOT.jar stock-app-2-0.0.1-SNAPSHOT.jar
 
+COPY application-prod.properties application.properties
+
 # Copy the spring-boot-api-tutorial.jar from the maven stage to the /opt/app directory of the current stage.
 #COPY target/payment-gateway-demo-0.0.1-SNAPSHOT.jar .
 
@@ -62,8 +64,8 @@ EXPOSE 5000
 
 ENV JAVA_OPTS "-Xmx512m -Xmx256m -Xmx6G"
 
-ENTRYPOINT ["java", "-jar", "stock-app-2-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=prod"]
-
+#ENTRYPOINT ["java", "-jar", "stock-app-2-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=prod"]
+ENTRYPOINT ["java", "-jar", "stock-app-2-0.0.1-SNAPSHOT.jar", "--spring.config.name=application", "--spring.config.location=.", "--spring.profiles.active=prod"]
 # Set the image name
 #LABEL maintainer="olugbodi-johnny"
 #LABEL version="1.0"
