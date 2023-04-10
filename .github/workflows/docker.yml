@@ -55,8 +55,29 @@ jobs:
 
       - name: Replace placeholders in Dockerfile
         run: |
-          envsubst < Dockerfile > Dockerfile
-        working-directory: ${{ github.workspace }}
+          sed -i "s/\${{ secrets.SERVER_PORT }}/${{ secrets.SERVER_PORT }}/g; \
+                  s/\${{ secrets.SPRING_DATASOURCE_URL }}/${{ secrets.SPRING_DATASOURCE_URL }}/g; \
+                  s/\${{ secrets.SPRING_DATASOURCE_USERNAME }}/${{ secrets.SPRING_DATASOURCE_USERNAME }}/g; \
+                  s/\${{ secrets.SPRING_DATASOURCE_PASSWORD }}/${{ secrets.SPRING_DATASOURCE_PASSWORD }}/g; \
+                  s/\${{ secrets.SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT }}/${{ secrets.SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT }}/g; \
+                  s/\${{ secrets.SPRING_JPA_HIBERNATE_DDL_AUTO }}/${{ secrets.SPRING_JPA_HIBERNATE_DDL_AUTO }}/g; \
+                  s/\${{ secrets.SPRING_JPA_HIBERNATE_SHOW_SQL }}/${{ secrets.SPRING_JPA_HIBERNATE_SHOW_SQL }}/g; \
+                  s/\${{ secrets.SPRING_ADMIN_EMAIL }}/${{ secrets.SPRING_ADMIN_EMAIL }}/g; \
+                  s/\${{ secrets.SPRING_ADMIN_PASSWORD }}/${{ secrets.SPRING_ADMIN_PASSWORD }}/g; \
+                  s/\${{ secrets.SPRING_MAIL_HOST }}/${{ secrets.SPRING_MAIL_HOST }}/g; \
+                  s/\${{ secrets.SPRING_MAIL_PORT }}/$SPRING_MAIL_PORT/g; \
+                  s/\${{ secrets.SPRING_MAIL_USERNAME }}/${{ secrets.SPRING_MAIL_USERNAME }}/g; \
+                  s/\${{ secrets.SPRING_MAIL_PASSWORD }}/${{ secrets.SPRING_MAIL_PASSWORD }}/g; \
+                  s/\${{ secrets.SPRING_MAIL_SMTP_AUTH }}/${{ secrets.SPRING_MAIL_SMTP_AUTH }}/g; \
+                  s/\${{ secrets.SPRING_MAIL_SMTP_STARTTLS }}/${{ secrets.SPRING_MAIL_SMTP_STARTTLS }}/g; \
+                  s/\${{ secrets.SPRING_MAIL_SMTP_SLL_ENABLE }}/${{ secrets.SPRING_MAIL_SMTP_SLL_ENABLE }}/g; \
+                  s/\${{ secrets.TOKEN_EXPIRATION }}/${{ secrets.TOKEN_EXPIRATION }}/g; \
+                  s/\${{ secrets.SECRET_KEY }}/${{ secrets.SECRET_KEY }}/g; \
+                  s/\${{ secrets.POLYGON_API_KEY }}/${{ secrets.POLYGON_API_KEY }}/g; \
+                  s/\${{ secrets.POLYGON_BASE_URL }}/${{ secrets.POLYGON_BASE_URL }}/g; \
+                  s/\${{ secrets.DEV_EMAIL }}/${{ secrets.DEV_EMAIL }}/g; \
+                  s/\${{ secrets.DEV_PASSWORD }}/${{ secrets.DEV_PASSWORD }}/g; \
+                  s/\${{ secrets.SWAGGER_URL }}/${{ secrets.SWAGGER_URL }}/g" Dockerfile
 
       - name: Create and upload source bundle to S3
         run: |
