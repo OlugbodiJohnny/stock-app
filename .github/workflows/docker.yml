@@ -100,7 +100,7 @@ jobs:
           POLYGON_API_KEY: ${{ secrets.POLYGON_API_KEY }}
           POLYGON_BASE_URL: ${{ secrets.POLYGON_BASE_URL }}
           DEV_EMAIL: ${{ secrets.DEV_EMAIL }}
-          DEV_PASSWORD: ${{ secrets.$DEV_PASSWORD }}
+          DEV_PASSWORD: ${{ secrets.DEV_PASSWORD }}
           SWAGGER_URL: ${{ secrets.SWAGGER_URL }}
 
       - name: Create and upload source bundle to S3
