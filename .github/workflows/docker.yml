@@ -55,29 +55,29 @@ jobs:
 
       - name: Replace placeholders in Dockerfile
         run: |
-          sed -i "s/SERVER_PORT/$SERVER_PORT/g; \
-                  s/SPRING_DATASOURCE_URL/$SPRING_DATASOURCE_URL/g; \
-                  s/SPRING_DATASOURCE_USERNAME/$SPRING_DATASOURCE_USERNAME/g; \
-                  s/SPRING_DATASOURCE_PASSWORD/$SPRING_DATASOURCE_PASSWORD/g; \
-                  s/SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT/$SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT/g; \
-                  s/SPRING_JPA_HIBERNATE_DDL_AUTO/$SPRING_JPA_HIBERNATE_DDL_AUTO/g; \
-                  s/SPRING_JPA_HIBERNATE_SHOW_SQL/$SPRING_JPA_HIBERNATE_SHOW_SQL/g; \
-                  s/SPRING_ADMIN_EMAIL/$SPRING_ADMIN_EMAIL/g; \
-                  s/SPRING_ADMIN_PASSWORD/$SPRING_ADMIN_PASSWORD/g; \
-                  s/SPRING_MAIL_HOST/$SPRING_MAIL_HOST/g; \
-                  s/SPRING_MAIL_PORT/$SPRING_MAIL_PORT/g; \
-                  s/SPRING_MAIL_USERNAME/$SPRING_MAIL_USERNAME/g; \
-                  s/SPRING_MAIL_PASSWORD/$SPRING_MAIL_PASSWORD/g; \
-                  s/SPRING_MAIL_SMTP_AUTH/$SPRING_MAIL_SMTP_AUTH/g; \
-                  s/SPRING_MAIL_SMTP_STARTTLS/$SPRING_MAIL_SMTP_STARTTLS/g; \
-                  s/SPRING_MAIL_SMTP_SLL_ENABLE/$SPRING_MAIL_SMTP_SLL_ENABLE/g; \
-                  s/TOKEN_EXPIRATION/$TOKEN_EXPIRATION/g; \
-                  s/SECRET_KEY/$SECRET_KEY/g; \
-                  s/POLYGON_API_KEY/$POLYGON_API_KEY/g; \
-                  s/POLYGON_BASE_URL/$POLYGON_BASE_URL/g; \
-                  s/DEV_EMAIL/$DEV_EMAIL/g; \
-                  s/DEV_PASSWORD/$DEV_PASSWORD/g; \
-                  s/SWAGGER_URL/$SWAGGER_URL/g" Dockerfile
+          sed -i "s/\SERVER_PORT/$SERVER_PORT/g; \
+                  s/\SPRING_DATASOURCE_URL/$SPRING_DATASOURCE_URL/g; \
+                  s/\SPRING_DATASOURCE_USERNAME/$SPRING_DATASOURCE_USERNAME/g; \
+                  s/\SPRING_DATASOURCE_PASSWORD/$SPRING_DATASOURCE_PASSWORD/g; \
+                  s/\secrets.SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT/$SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT/g; \
+                  s/\SPRING_JPA_HIBERNATE_DDL_AUTO/$SPRING_JPA_HIBERNATE_DDL_AUTO/g; \
+                  s/\SPRING_JPA_HIBERNATE_SHOW_SQL/$SPRING_JPA_HIBERNATE_SHOW_SQL/g; \
+#                  s/\SPRING_ADMIN_EMAIL/$SPRING_ADMIN_EMAIL/g; \
+#                  s/\SPRING_ADMIN_PASSWORD/$SPRING_ADMIN_PASSWORD/g; \
+#                  s/\SPRING_MAIL_HOST/$SPRING_MAIL_HOST/g; \
+                  s/\SPRING_MAIL_PORT/$SPRING_MAIL_PORT/g; \
+#                  s/\SPRING_MAIL_USERNAME/$SPRING_MAIL_USERNAME/g; \
+#                  s/\SPRING_MAIL_PASSWORD/$SPRING_MAIL_PASSWORD/g; \
+                  s/\SPRING_MAIL_SMTP_AUTH/$SPRING_MAIL_SMTP_AUTH/g; \
+                  s/\SPRING_MAIL_SMTP_STARTTLS/$SPRING_MAIL_SMTP_STARTTLS/g; \
+                  s/\SPRING_MAIL_SMTP_SLL_ENABLE/$SPRING_MAIL_SMTP_SLL_ENABLE/g; \
+                  s/\TOKEN_EXPIRATION/$TOKEN_EXPIRATION/g; \
+                  s/\SECRET_KEY/$SECRET_KEY/g; \
+                  s/\POLYGON_API_KEY/$POLYGON_API_KEY/g; \
+                  s/\POLYGON_BASE_URL/$POLYGON_BASE_URL/g; \
+                  s/\DEV_EMAIL/$DEV_EMAIL/g; \
+                  s/\DEV_PASSWORD/$DEV_PASSWORD/g; \
+                  s/\SWAGGER_URL/$SWAGGER_URL/g" Dockerfile
         env:
           SERVER_PORT: ${{ secrets.SERVER_PORT }}
           SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
