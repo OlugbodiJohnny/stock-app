@@ -65,7 +65,7 @@ jobs:
                   s/\${{ secrets.SPRING_ADMIN_EMAIL }}/${{ secrets.SPRING_ADMIN_EMAIL }}/g; \
                   s/\${{ secrets.SPRING_ADMIN_PASSWORD }}/${{ secrets.SPRING_ADMIN_PASSWORD }}/g; \
                   s/\${{ secrets.SPRING_MAIL_HOST }}/${{ secrets.SPRING_MAIL_HOST }}/g; \
-                  s/\${{ secrets.SPRING_MAIL_PORT }}/$SPRING_MAIL_PORT/g; \
+                  s/\${{ secrets.SPRING_MAIL_PORT }}/${{ secrets.SPRING_MAIL_PORT }}/g; \
                   s/\${{ secrets.SPRING_MAIL_USERNAME }}/${{ secrets.SPRING_MAIL_USERNAME }}/g; \
                   s/\${{ secrets.SPRING_MAIL_PASSWORD }}/${{ secrets.SPRING_MAIL_PASSWORD }}/g; \
                   s/\${{ secrets.SPRING_MAIL_SMTP_AUTH }}/${{ secrets.SPRING_MAIL_SMTP_AUTH }}/g; \
