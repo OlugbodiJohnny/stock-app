@@ -1,3 +1,5 @@
+# Stop and remove any existing containers created from the previous version of the image
+RUN docker-compose down
 FROM maven:3.8.3-openjdk-17 AS build
 WORKDIR /app
 COPY . .
@@ -60,7 +62,7 @@ ENV DEV_PASSWORD secrets.DEV_PASSWORD
 
 ENV SWAGGER_URL secrets.SWAGGER_URL
 
-ENV JAVA_OPTS "-Xms2g -Xmx32G"
+ENV JAVA_OPTS "-Xms512m -Xmx32G"
 
 ENTRYPOINT ["java", "-jar", "stock-app-2-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=prod"]
 # Set the image name
