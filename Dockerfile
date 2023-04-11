@@ -63,9 +63,3 @@ ENV SWAGGER_URL secrets.SWAGGER_URL
 ENV JAVA_OPTS "-Xms512m -Xmx32G"
 
 ENTRYPOINT ["java", "-jar", "stock-app-2-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=prod"]
-# Set the image name
-#LABEL maintainer="olugbodi-johnny"
-#LABEL version="1.0"
-#LABEL description="stock-app-2"
-#LABEL name="stock-app-2"
-#LABEL container_id="stock-app-2"
