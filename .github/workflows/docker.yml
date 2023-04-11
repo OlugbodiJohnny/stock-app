@@ -10,8 +10,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    concurrency:
-      group: stock-app-workflow-group
 #    if: github.event.pull_request.merged == true
     steps:
     - name: Call Maven Workflow
