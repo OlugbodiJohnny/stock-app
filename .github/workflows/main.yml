@@ -14,15 +14,15 @@ jobs:
       group: stock-app-workflow-group
     if: github.event.pull_request.merged == true
     steps:
-    - name: Check out code
-      uses: actions/checkout@v2
-
     - name: Call Maven Workflow
       uses: aurelien-baudet/workflow-dispatch@v2
       with:
         workflow: maven.yml
         ref: ${{ github.event.pull_request.head.ref }}
         token: ${{ secrets.WORKFLOW_TOKEN }}
+
+    - name: Check out code
+      uses: actions/checkout@v2
 
     - name: Move JAR to root directory
       run: mv target/*.jar ./
