@@ -1,7 +1,7 @@
 name: Build with Maven
 on:
-  push:
-    branches: [ main, docker, docker-multi ]
+#  push:
+#    branches: [ main, docker, docker-multi ]
   workflow_dispatch:
 
 jobs:
