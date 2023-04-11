@@ -30,7 +30,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: stock-app-2-0.0.1-SNAPSHOT.jar
-        path: ${{ github.workspace }}/stock-app-2-0.0.1-SNAPSHOT.jar
+        path: stock-app-2-0.0.1-SNAPSHOT.jar
 
     - name: Create Procfile
       run: |
