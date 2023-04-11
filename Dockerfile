@@ -3,6 +3,7 @@ WORKDIR /app
 COPY . .
 # Command to free up memory before running mvn
 RUN apt-get update && apt-get install -y procps && \
+    free -m && sync && echo 3 > /proc/sys/vm/drop_caches && free -m \
     mvn clean package -DskipTests
 
 FROM openjdk:17-alpine
