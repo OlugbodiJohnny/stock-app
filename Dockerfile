@@ -1,11 +1,11 @@
-FROM maven:3.8.3-openjdk-17 AS build
+FROM jkillz234/secrets.AWS_APPLICATION_NAME_DOCKER:github.sha AS stock-app
 WORKDIR /app
 COPY . .
-RUN mvn clean package -DskipTests
+#RUN mvn clean package -DskipTests
 
 FROM openjdk:17-alpine
 
-COPY --from=build /app/target/stock-app-2-0.0.1-SNAPSHOT.jar stock-app-2-0.0.1-SNAPSHOT.jar
+COPY --from=stock-app /app/target/stock-app-2-0.0.1-SNAPSHOT.jar stock-app-2-0.0.1-SNAPSHOT.jar
 #COPY /app/target/stock-app-2-0.0.1-SNAPSHOT.jar stock-app-2-0.0.1-SNAPSHOT.jar
 
 # Copy the spring-boot-api-tutorial.jar from the maven stage to the /opt/app directory of the current stage.
@@ -61,7 +61,7 @@ ENV DEV_PASSWORD secrets.DEV_PASSWORD
 
 ENV SWAGGER_URL secrets.SWAGGER_URL
 
-ENV JAVA_OPTS "-Xms512m -Xmx6G"
+ENV JAVA_OPTS "-Xms1024m -Xmx6G"
 
 ENTRYPOINT ["java", "-jar", "stock-app-2-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=prod"]
 # Set the image name
