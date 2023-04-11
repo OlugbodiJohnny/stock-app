@@ -19,13 +19,13 @@ jobs:
         ref: ${{ github.event.pull_request.head.ref }}
         token: ${{ secrets.WORKFLOW_TOKEN }}
 
-#    - name: Wait for Maven Workflow to Complete
-#      uses: styfle/wait-for-remote-action@v1
-#      with:
-#        repo: OlugbodiJohnny/stock-app
-#        ref: ${{ github.event.after }}
-#        workflow: maven.yml
-#        token: ${{ secrets.ACCESS_TOKEN }}
+    - name: Wait for Maven Workflow to Complete
+      uses: styfle/wait-for-remote-action@v1
+      with:
+        repo: OlugbodiJohnny/stock-app
+        ref: ${{ github.event.after }}
+        workflow: maven.yml
+        token: ${{ secrets.ACCESS_TOKEN }}
 
     - name: Check out code
       uses: actions/checkout@v2
