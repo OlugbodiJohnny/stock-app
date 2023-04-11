@@ -1,11 +1,20 @@
 FROM maven:3.8.3-openjdk-17 AS build
 WORKDIR /app
 COPY . .
+# Command to free up memory before running mvn
+RUN free -m && sync && echo 3 > /proc/sys/vm/drop_caches && free -m
 RUN mvn clean package -DskipTests
 
 FROM openjdk:17-alpine
 
 COPY --from=build /app/target/stock-app-2-0.0.1-SNAPSHOT.jar stock-app-2-0.0.1-SNAPSHOT.jar
+
+# remove any intermediate files and folders
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# clear caches and remove unnecessary packages
+RUN apt-get clean && apt-get autoremove -y
+
 #COPY /app/target/stock-app-2-0.0.1-SNAPSHOT.jar stock-app-2-0.0.1-SNAPSHOT.jar
 
 # Copy the spring-boot-api-tutorial.jar from the maven stage to the /opt/app directory of the current stage.
