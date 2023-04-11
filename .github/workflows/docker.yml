@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
     - name: Call Maven Workflow
       uses: aurelien-baudet/workflow-dispatch@v2
       with:
@@ -19,15 +22,43 @@ jobs:
         ref: ${{ github.event.pull_request.head.ref }}
         token: ${{ secrets.WORKFLOW_TOKEN }}
 
-    - name: Check out code
-      uses: actions/checkout@v2
+#    - name: Wait for Maven Workflow to Complete
+#      uses: styfle/wait-for-remote-action@v1
+#      with:
+#        repo: OlugbodiJohnny/stock-app
+#        ref: ${{ github.event.after }}
+#        workflow: maven.yml
+#        token: ${{ secrets.ACCESS_TOKEN }}
+#
 
-    - name: Log in to Docker registry
-      uses: docker/login-action@v1
-      with:
-        registry: ${{ secrets.DOCKER_REGISTRY }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+#      - name: Log in to Docker registry
+#        uses: docker/login-action@v1
+#        with:
+#          registry: ${{ secrets.DOCKER_REGISTRY }}
+#          username: ${{ secrets.DOCKER_USERNAME }}
+#          password: ${{ secrets.DOCKER_PASSWORD }}
+
+#      - name: Build and push Docker image
+#        uses: docker/build-push-action@v2
+#        with:
+#          context: .
+#          dockerfile: ./Dockerfile
+#          push: true
+#          tags: ${{ secrets.DOCKER_REGISTRY }}/jkillz234/${{ secrets.AWS_APPLICATION_NAME_DOCKER }}:${{ github.sha }}
+#        env:
+#          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+#          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Install AWS CLI
+      run: |
+        sudo apt-get update
+        sudo apt-get install awscli -y
+
+    - name: Configure AWS credentials
+      run: |
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws configure set region ${{ secrets.AWS_REGION }}
 
     - name: Replace placeholders in Dockerfile
       run: |
@@ -48,9 +79,7 @@ jobs:
         s|secrets.POLYGON_BASE_URL|$POLYGON_BASE_URL|g;
         s|secrets.DEV_EMAIL|$DEV_EMAIL|g;
         s|secrets.DEV_PASSWORD|$DEV_PASSWORD|g;
-        s|secrets.SWAGGER_URL|$SWAGGER_URL|g";
-        s|secrets.AWS_APPLICATION_NAME_DOCKER|$AWS_APPLICATION_NAME_DOCKER|g";
-        s|github.sha|$GITHUB_SHA|g Dockerfile
+        s|secrets.SWAGGER_URL|$SWAGGER_URL|g" Dockerfile
       env:
         SERVER_PORT: ${{ secrets.SERVER_PORT }}
         SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
@@ -75,30 +104,6 @@ jobs:
         DEV_EMAIL: ${{ secrets.DEV_EMAIL }}
         DEV_PASSWORD: ${{ secrets.DEV_PASSWORD }}
         SWAGGER_URL: ${{ secrets.SWAGGER_URL }}
-        AWS_APPLICATION_NAME_DOCKER: ${{ secrets.AWS_APPLICATION_NAME_DOCKER }}
-        GITHUB_SHA: ${{ github.sha }}
-
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        dockerfile: ./Dockerfile
-        push: true
-        tags: ${{ secrets.DOCKER_REGISTRY }}/jkillz234/${{ secrets.AWS_APPLICATION_NAME_DOCKER }}:${{ github.sha }}
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-    - name: Install AWS CLI
-      run: |
-        sudo apt-get update
-        sudo apt-get install awscli -y
-
-    - name: Configure AWS credentials
-      run: |
-        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws configure set region ${{ secrets.AWS_REGION }}
-
 
     - name: Create and upload source bundle to S3
       run: |
