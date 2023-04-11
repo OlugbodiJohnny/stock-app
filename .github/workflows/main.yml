@@ -8,46 +8,66 @@ on:
     branches: [main]
 
 jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          architecture: x64
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml -Dspring.profiles.active=prod
+        working-directory: ${{ github.workspace }}
+
+      - name: Upload JAR as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: stock-app-2-0.0.1-SNAPSHOT.jar
+          path: target/stock-app-2-0.0.1-SNAPSHOT.jar
+
   build:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
+    needs: build-and-test
     steps:
-    - name: Call Maven Workflow
-      uses: aurelien-baudet/workflow-dispatch@v2
-      with:
-        workflow: maven.yml
-        ref: ${{ github.event.pull_request.head.ref }}
-        token: ${{ secrets.WORKFLOW_TOKEN }}
+      - name: Check out code
+        uses: actions/checkout@v2
 
-    - name: Check out code
-      uses: actions/checkout@v2
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: stock-app-2-0.0.1-SNAPSHOT.jar
+          path: target/stock-app-2-0.0.1-SNAPSHOT.jar
 
-#    - name: Move JAR to root directory
-#      run: mv target/*.jar ./
-#      working-directory: ${{ github.workspace }}
+      - name: Create Procfile
+        run: |
+          echo "web: java -jar $(ls *.jar) --server.port=${{ secrets.SERVER_PORT }} --spring.config.name=application-prod" > Procfile
+        working-directory: ${{ github.workspace }}
 
-    - name: Download artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: stock-app-2-0.0.1-SNAPSHOT.jar
-        path: ./stock-app-2-0.0.1-SNAPSHOT.jar
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
 
-    - name: Create Procfile
-      run: |
-        echo "web: java -jar $(ls *.jar) --server.port=${{ secrets.SERVER_PORT }} --spring.config.name=application-prod" > Procfile
-      working-directory: ${{ github.workspace }}
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v15
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: ${{ secrets.AWS_APPLICATION_NAME }}
+          environment_name: ${{ secrets.AWS_ENVIRONMENT_NAME }}
+          region: ${{ secrets.AWS_REGION }}
+          version_label: ${{ github.sha }}
+          deployment_package: deploy.zip
+          wait_for_environment_recovery: 90
 
-    - name: Generate deployment package
-      run: zip -r deploy.zip . -x '*.git*'
-
-    - name: Deploy to Elastic Beanstalk
-      uses: einaregilsson/beanstalk-deploy@v15
-      with:
-        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        application_name: ${{ secrets.AWS_APPLICATION_NAME }}
-        environment_name: ${{ secrets.AWS_ENVIRONMENT_NAME }}
-        region: ${{ secrets.AWS_REGION }}
-        version_label: ${{ github.sha }}
-        deployment_package: deploy.zip
-        wait_for_environment_recovery: 90
+#      - name: Call Maven Workflow
+#        uses: aurelien-baudet/workflow-dispatch@v2
+#        with:
+#          workflow: maven.yml
+#          ref: ${{ github.event.pull_request.head.ref }}
+#          token: ${{ secrets.WORKFLOW_TOKEN }}
