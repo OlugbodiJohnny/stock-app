@@ -131,15 +131,34 @@ jobs:
         zip -r app.zip . -x "*.git*" -x "*.github*" -x "*README.md*" -x "*.gitignore*"
         aws s3 cp app.zip s3://${{ secrets.S3_BUCKET }}/${{ secrets.AWS_APPLICATION_NAME_DOCKER }}/${{ github.sha }}.zip --region ${{ secrets.AWS_REGION }}
 
-#    - name: SSH into EC2 instance and stop Docker container
-#      uses: appleboy/ssh-action@master
-#      with:
-#        host: ${{ secrets.EC2_HOST }}
-#        username: ${{ secrets.EC2_USERNAME }}
-#        key: ${{ secrets.EC2_PRIVATE_KEY }}
-#        port: ${{ secrets.EC2_SSH_PORT }}
-#        script: |
-#          sudo docker stop <container_name>
+    - name: SSH into EC2 instance and stop Docker container
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        key: ${{ secrets.EC2_PRIVATE_KEY }}
+        port: ${{ secrets.EC2_SSH_PORT }}
+        script: |
+          set -e
+          if sudo docker container ls -a --filter name=current_springboot_1 | grep -q current_springboot_1; then
+            if ! sudo docker container rm current_springboot_1; then
+              echo "Failed to remove current_springboot_1 container"
+              exit 1
+            fi
+          fi
+          if sudo docker container ls -a --filter name=stock-app | grep -q stock-app; then
+            if ! sudo docker container rm stock-app; then
+              echo "Failed to remove stock-app container"
+              exit 1
+            fi
+          fi
+          if ! sudo docker image prune; then
+            echo "Failed to prune Docker images"
+            exit 1
+          fi
+
+      #          sudo docker-compose down
+#          sudo docker stop stock-app
 
     - name: Update Elastic Beanstalk environment
       run: |

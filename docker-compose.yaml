@@ -21,7 +21,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: on-failure
+    restart: unless-stopped
 #    environment:
 #      SERVER_PORT: ${{ secrets.SERVER_PORT }}
 #      SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
