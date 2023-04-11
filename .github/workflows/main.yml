@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  build-and-test:
+  package-with-maven:
     runs-on: ubuntu-latest
     if: (github.event_name == 'pull_request' && github.event.action == 'opened')
     steps:
@@ -25,10 +25,9 @@ jobs:
         run: mvn -B package --file pom.xml -Dspring.profiles.active=prod
         working-directory: ${{ github.workspace }}
 
-  build:
+  deploy-to-aws:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' || github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
-#    needs: build-and-test
     steps:
       - name: Check out code
         uses: actions/checkout@v2
