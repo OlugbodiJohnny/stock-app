@@ -1,14 +1,14 @@
-#FROM maven:3.8.3-openjdk-17 AS build
-#WORKDIR /app
-#COPY . .
-#RUN mvn clean package -DskipTests
+FROM maven:3.8.3-openjdk-17 AS build
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
 FROM openjdk:17-alpine
 
-#COPY --from=build /app/target/stock-app-2-0.0.1-SNAPSHOT.jar stock-app-2-0.0.1-SNAPSHOT.jar
+COPY --from=build /app/target/stock-app-2-0.0.1-SNAPSHOT.jar stock-app-2-0.0.1-SNAPSHOT.jar
 
 # Copy the spring-boot-api-tutorial.jar from the maven stage to the /opt/app directory of the current stage.
-COPY target/stock-app-2-0.0.1-SNAPSHOT.jar .
+#COPY target/payment-gateway-demo-0.0.1-SNAPSHOT.jar .
 
 #ARG JAR_FILE=payment-gateway-demo-0.0.1-SNAPSHOT.jar
 
@@ -63,8 +63,3 @@ ENV SWAGGER_URL secrets.SWAGGER_URL
 ENV JAVA_OPTS "-Xms512m -Xmx32G"
 
 ENTRYPOINT ["java", "-jar", "stock-app-2-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=prod"]
-# Set the image name
-#LABEL maintainer="olugbodi-johnny"
-#LABEL version="1.0"
-#LABEL description="stock-app-2"
-#LABEL name="stock-app-2"
