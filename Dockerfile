@@ -8,7 +8,7 @@ FROM openjdk:17-alpine
 #COPY --from=build /app/target/stock-app-2-0.0.1-SNAPSHOT.jar stock-app-2-0.0.1-SNAPSHOT.jar
 
 # Copy the spring-boot-api-tutorial.jar from the maven stage to the /opt/app directory of the current stage.
-COPY /app/target/stock-app-2-0.0.1-SNAPSHOT.jar stock-app-2-0.0.1-SNAPSHOT.jar
+COPY target/stock-app-2-0.0.1-SNAPSHOT.jar /app/target/stock-app-2-0.0.1-SNAPSHOT.jar
 
 #ARG JAR_FILE=payment-gateway-demo-0.0.1-SNAPSHOT.jar
 
