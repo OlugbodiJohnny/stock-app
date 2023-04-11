@@ -119,9 +119,4 @@ public class AppConfig {
     public RestTemplate restTemplate () {
         return new RestTemplate();
     }
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
 }

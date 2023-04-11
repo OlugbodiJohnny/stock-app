@@ -1,39 +1,59 @@
 version: '3.8'
 
 services:
-  postgres:
-    image: postgres:latest
-    restart: always
-    ports:
-      - "49153:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgrespw
-      POSTGRES_DB: stock-app-2
-    command: postgres -c listen_addresses=*
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    networks:
-      - my-stock-app-2-network
+#  postgres:
+#    image: postgres:alpine3.17
+#    restart: always
+#    ports:
+#      - "49152:5432"
+#    environment:
+#      POSTGRES_USER: olugbodijohnny@live.com
+#      POSTGRES_PASSWORD: ICEmala234!@
+#      POSTGRES_DB: stock-app
+#    command: postgres -c listen_addresses=*
+#    volumes:
+#      - postgres-data:/var/lib/postgresql/data
+#    networks:
+#      - my-stock-app-2-network
 
   springboot:
     build:
       context: .
       dockerfile: Dockerfile
     restart: always
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/stock-app-2
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgrespw
+#    environment:
+#      SERVER_PORT: ${{ secrets.SERVER_PORT }}
+#      SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
+#      SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+#      SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+#      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: ${{ secrets.SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT }}
+#      SPRING_JPA_HIBERNATE_DDL_AUTO: ${{ secrets.SPRING_JPA_HIBERNATE_DDL_AUTO }}
+#      SPRING_JPA_HIBERNATE_SHOW_SQL: ${{ secrets.SPRING_JPA_HIBERNATE_SHOW_SQL }}
+#      SPRING_ADMIN_EMAIL: ${{ secrets.SPRING_ADMIN_EMAIL }}
+#      SPRING_ADMIN_PASSWORD: ${{ secrets.SPRING_ADMIN_PASSWORD }}
+#      SPRING_MAIL_HOST: ${{ secrets.SPRING_MAIL_HOST }}
+#      SPRING_MAIL_PORT: ${{ secrets.SPRING_MAIL_PORT }}
+#      SPRING_MAIL_USERNAME: ${{ secrets.SPRING_MAIL_USERNAME }}
+#      SPRING_MAIL_PASSWORD: ${{ secrets.SPRING_MAIL_PASSWORD }}
+#      SPRING_MAIL_SMTP_AUTH: ${{ secrets.SPRING_MAIL_SMTP_AUTH }}
+#      SPRING_MAIL_SMTP_STARTTLS: ${{ secrets.SPRING_MAIL_SMTP_STARTTLS }}
+#      SPRING_MAIL_SMTP_SLL_ENABLE: ${{ secrets.SPRING_MAIL_SMTP_SLL_ENABLE }}
+#      TOKEN_EXPIRATION: ${{ secrets.TOKEN_EXPIRATION }}
+#      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+#      POLYGON_API_KEY: ${{ secrets.POLYGON_API_KEY }}
+#      POLYGON_BASE_URL: ${{ secrets.POLYGON_BASE_URL }}
+#      DEV_EMAIL: ${{ secrets.DEV_EMAIL }}
+#      DEV_PASSWORD: ${{ secrets.DEV_PASSWORD }}
+#      SWAGGER_URL: ${{ secrets.SWAGGER_URL }}
     ports:
-      - "8080:8090"
-    depends_on:
-      - postgres
-    networks:
-      - my-stock-app-2-network
-
-networks:
-  my-stock-app-2-network:
-
-volumes:
-  postgres-data:
+      - "5000:5000"
+#    depends_on:
+#      - postgres
+#    networks:
+#      - my-stock-app-2-network
+#
+#networks:
+#  my-stock-app-2-network:
+#
+#volumes:
+#  postgres-data:
