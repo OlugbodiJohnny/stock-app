@@ -4,7 +4,6 @@ on:
   push:
     branches: [ docker ]
   pull_request:
-    types: [closed]
     branches: [docker]
 
 jobs:
