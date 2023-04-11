@@ -16,7 +16,7 @@ RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # clear caches and remove unnecessary packages
 RUN apt-get clean && apt-get autoremove -y
 
-#COPY /app/target/stock-app-2-0.0.1-SNAPSHOT.jar stock-app-2-0.0.1-SNAPSHOT.jar
+COPY /app/target/stock-app-2-0.0.1-SNAPSHOT.jar stock-app-2-0.0.1-SNAPSHOT.jar
 
 # Copy the spring-boot-api-tutorial.jar from the maven stage to the /opt/app directory of the current stage.
 #COPY target/payment-gateway-demo-0.0.1-SNAPSHOT.jar .
