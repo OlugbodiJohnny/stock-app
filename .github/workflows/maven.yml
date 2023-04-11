@@ -24,3 +24,9 @@ jobs:
     - name: Move JAR to root directory
       run: mv target/*.jar ./
       working-directory: ${{ github.workspace }}
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: stock-app-2-0.0.1-SNAPSHOT.jar
+        path: ${{ github.workspace }}/stock-app-2-0.0.1-SNAPSHOT.jar
