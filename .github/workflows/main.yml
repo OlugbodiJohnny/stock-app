@@ -24,9 +24,9 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v2
 
-    - name: Move JAR to root directory
-      run: mv target/*.jar ./
-      working-directory: ${{ github.workspace }}
+#    - name: Move JAR to root directory
+#      run: mv target/*.jar ./
+#      working-directory: ${{ github.workspace }}
 
     - name: Create Procfile
       run: |
