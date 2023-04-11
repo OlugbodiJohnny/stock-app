@@ -2,8 +2,8 @@ FROM maven:3.8.3-openjdk-17 AS build
 WORKDIR /app
 COPY . .
 # Command to free up memory before running mvn
-RUN free -m && sync && echo 3 > /proc/sys/vm/drop_caches && free -m
-RUN mvn clean package -DskipTests
+RUN apt-get update && apt-get install -y procps && \
+    mvn clean package -DskipTests
 
 FROM openjdk:17-alpine
 
