@@ -65,7 +65,6 @@ ENV SWAGGER_URL secrets.SWAGGER_URL
 ENV JAVA_OPTS "-Xmx512m -Xmx256m -Xmx6G"
 
 ENTRYPOINT ["java", "-jar", "stock-app-2-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=prod"]
-#ENTRYPOINT ["java", "-jar", "stock-app-2-0.0.1-SNAPSHOT.jar", "--spring.config.name=application", "--spring.config.location=./", "--spring.profiles.active=prod"]
 # Set the image name
 #LABEL maintainer="olugbodi-johnny"
 #LABEL version="1.0"
