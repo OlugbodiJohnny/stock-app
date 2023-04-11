@@ -16,6 +16,7 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1
       with:
         workflow: maven.yml
+        ref: ${{ github.event.pull_request.head.ref }}
 
     - name: Check out code
       uses: actions/checkout@v2
