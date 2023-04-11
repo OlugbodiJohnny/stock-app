@@ -17,10 +17,11 @@ services:
 #      - my-stock-app-2-network
 
   springboot:
+    container_name: stock-app
     build:
       context: .
       dockerfile: Dockerfile
-    restart: always
+    restart: no
 #    environment:
 #      SERVER_PORT: ${{ secrets.SERVER_PORT }}
 #      SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
