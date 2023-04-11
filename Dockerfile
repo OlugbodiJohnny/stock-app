@@ -1,3 +1,5 @@
+# Stop and remove any existing containers created from the previous version of the image
+RUN docker-compose down
 FROM maven:3.8.3-openjdk-17 AS build
 WORKDIR /app
 COPY . .
