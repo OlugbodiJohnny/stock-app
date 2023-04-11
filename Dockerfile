@@ -62,7 +62,7 @@ ENV DEV_PASSWORD secrets.DEV_PASSWORD
 
 ENV SWAGGER_URL secrets.SWAGGER_URL
 
-ENV JAVA_OPTS "-Xms512mb -Xmx32G"
+ENV JAVA_OPTS "-Xms512m -Xmx32G"
 
 ENTRYPOINT ["java", "-jar", "stock-app-2-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=prod"]
 # Set the image name
