@@ -110,10 +110,6 @@ jobs:
         zip -r app.zip . -x "*.git*" -x "*.github*" -x "*README.md*" -x "*.gitignore*"
         aws s3 cp app.zip s3://${{ secrets.S3_BUCKET }}/${{ secrets.AWS_APPLICATION_NAME_DOCKER }}/${{ github.sha }}.zip --region ${{ secrets.AWS_REGION }}
 
-    - name: Stop and remove Docker containers on EBS environment
-      run: |
-        eb ssh ${{ secrets.AWS_ENVIRONMENT_NAME_DOCKER }} --command "docker stop \$(docker ps -a -q) && docker system prune -a -f"
-
     - name: Update Elastic Beanstalk environment
       run: |
         aws elasticbeanstalk create-application-version --application-name ${{ secrets.AWS_APPLICATION_NAME_DOCKER }} --version-label ${{ github.sha }} --source-bundle S3Bucket=${{ secrets.S3_BUCKET }},S3Key=${{ secrets.AWS_APPLICATION_NAME_DOCKER }}/${{ github.sha }}.zip
