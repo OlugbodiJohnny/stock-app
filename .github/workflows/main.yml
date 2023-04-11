@@ -53,11 +53,6 @@ jobs:
           echo "web: java -jar $(ls *.jar) --server.port=${{ secrets.SERVER_PORT }} --spring.config.name=application-prod" > Procfile
         working-directory: ${{ github.workspace }}
 
-      - name: Create Procfile
-        run: |
-          echo "web: java -jar $(ls *.jar) --server.port=${{ secrets.SERVER_PORT }} --spring.config.name=application-prod" > Procfile
-        working-directory: ${{ github.workspace }}
-
       - name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*'
 

@@ -10,6 +10,7 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    if: (github.event_name == 'pull_request' && github.event.action == 'opened')
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -25,15 +26,9 @@ jobs:
         run: mvn -B package --file pom.xml -Dspring.profiles.active=prod
         working-directory: ${{ github.workspace }}
 
-      - name: Upload JAR as artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: stock-app-2-0.0.1-SNAPSHOT.jar
-          path: target/stock-app-2-0.0.1-SNAPSHOT.jar
-
   build:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true
+    if: github.event_name == 'push' || github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
     steps:
     - name: Check out code
       uses: actions/checkout@v2
@@ -56,11 +51,25 @@ jobs:
 #          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
 #          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Download JAR artifact
-      uses: actions/download-artifact@v2
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
       with:
-        name: stock-app-2-0.0.1-SNAPSHOT.jar
-        path: target/stock-app-2-0.0.1-SNAPSHOT.jar
+        java-version: '17'
+        distribution: 'adopt'
+        architecture: x64
+
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml -Dspring.profiles.active=prod
+      working-directory: ${{ github.workspace }}
+
+    - name: Move JAR to root directory
+      run: mv target/*.jar ./
+      working-directory: ${{ github.workspace }}
+
+    - name: Create Procfile
+      run: |
+        echo "web: java -jar $(ls *.jar) --server.port=${{ secrets.SERVER_PORT }} --spring.config.name=application-prod" > Procfile
+      working-directory: ${{ github.workspace }}
 
     - name: Install AWS CLI
       run: |
