@@ -12,34 +12,34 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     steps:
-      - name: Call Maven Workflow
-        uses: actions/workflow-dispatch@v2
-        with:
-          workflow: maven.yml
+    - name: Call Maven Workflow
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: maven.yml
 
-      - name: Check out code
-        uses: actions/checkout@v2
+    - name: Check out code
+      uses: actions/checkout@v2
 
-      - name: Move JAR to root directory
-        run: mv target/*.jar ./
-        working-directory: ${{ github.workspace }}
+    - name: Move JAR to root directory
+      run: mv target/*.jar ./
+      working-directory: ${{ github.workspace }}
 
-      - name: Create Procfile
-        run: |
-          echo "web: java -jar $(ls *.jar) --server.port=${{ secrets.SERVER_PORT }} --spring.config.name=application-prod" > Procfile
-        working-directory: ${{ github.workspace }}
+    - name: Create Procfile
+      run: |
+        echo "web: java -jar $(ls *.jar) --server.port=${{ secrets.SERVER_PORT }} --spring.config.name=application-prod" > Procfile
+      working-directory: ${{ github.workspace }}
 
-      - name: Generate deployment package
-        run: zip -r deploy.zip . -x '*.git*'
+    - name: Generate deployment package
+      run: zip -r deploy.zip . -x '*.git*'
 
-      - name: Deploy to Elastic Beanstalk
-        uses: einaregilsson/beanstalk-deploy@v15
-        with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: ${{ secrets.AWS_APPLICATION_NAME }}
-          environment_name: ${{ secrets.AWS_ENVIRONMENT_NAME }}
-          region: ${{ secrets.AWS_REGION }}
-          version_label: ${{ github.sha }}
-          deployment_package: deploy.zip
-          wait_for_environment_recovery: 90
+    - name: Deploy to Elastic Beanstalk
+      uses: einaregilsson/beanstalk-deploy@v15
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: ${{ secrets.AWS_APPLICATION_NAME }}
+        environment_name: ${{ secrets.AWS_ENVIRONMENT_NAME }}
+        region: ${{ secrets.AWS_REGION }}
+        version_label: ${{ github.sha }}
+        deployment_package: deploy.zip
+        wait_for_environment_recovery: 90
