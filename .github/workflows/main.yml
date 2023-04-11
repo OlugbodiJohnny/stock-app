@@ -15,7 +15,7 @@ jobs:
     if: github.event.pull_request.merged == true
     steps:
     - name: Call Maven Workflow
-      uses: benc-uk/workflow-dispatch@v1
+      uses: aurelien-baudet/workflow-dispatch@v2
       with:
         workflow: maven.yml
         ref: ${{ github.event.pull_request.head.ref }}

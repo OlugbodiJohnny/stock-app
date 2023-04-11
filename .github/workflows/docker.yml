@@ -13,22 +13,22 @@ jobs:
 #    if: github.event.pull_request.merged == true
     steps:
     - name: Call Maven Workflow
-      uses: benc-uk/workflow-dispatch@v1
+      uses: aurelien-baudet/workflow-dispatch@v2
       with:
         workflow: maven.yml
         ref: ${{ github.event.pull_request.head.ref }}
         token: ${{ secrets.WORKFLOW_TOKEN }}
 
-    - name: Wait for Maven Workflow to Complete
-      uses: styfle/wait-for-remote-action@v1
-      with:
-        repo: OlugbodiJohnny/stock-app
-        ref: ${{ github.event.after }}
-        workflow: maven.yml
-        token: ${{ secrets.ACCESS_TOKEN }}
-
-    - name: Check out code
-      uses: actions/checkout@v2
+#    - name: Wait for Maven Workflow to Complete
+#      uses: styfle/wait-for-remote-action@v1
+#      with:
+#        repo: OlugbodiJohnny/stock-app
+#        ref: ${{ github.event.after }}
+#        workflow: maven.yml
+#        token: ${{ secrets.ACCESS_TOKEN }}
+#
+#    - name: Check out code
+#      uses: actions/checkout@v2
 
 #      - name: Log in to Docker registry
 #        uses: docker/login-action@v1
