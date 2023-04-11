@@ -1,5 +1,4 @@
 # Stop and remove any existing containers created from the previous version of the image
-RUN docker-compose down
 FROM maven:3.8.3-openjdk-17 AS build
 WORKDIR /app
 COPY . .
@@ -70,3 +69,4 @@ ENTRYPOINT ["java", "-jar", "stock-app-2-0.0.1-SNAPSHOT.jar", "--spring.profiles
 #LABEL version="1.0"
 #LABEL description="stock-app-2"
 #LABEL name="stock-app-2"
+#LABEL container_id="stock-app-2"
