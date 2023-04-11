@@ -27,8 +27,8 @@ jobs:
 #        workflow: maven.yml
 #        token: ${{ secrets.ACCESS_TOKEN }}
 #
-#    - name: Check out code
-#      uses: actions/checkout@v2
+    - name: Check out code
+      uses: actions/checkout@v2
 
 #      - name: Log in to Docker registry
 #        uses: docker/login-action@v1
