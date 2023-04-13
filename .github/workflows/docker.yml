@@ -146,12 +146,6 @@ jobs:
               exit 1
             fi
           fi
-          if sudo docker container ls -a --filter name=current_springboot_1 | grep -q current_springboot_1; then
-            if ! sudo docker container rm current_springboot_1; then
-              echo "Failed to remove current_springboot_1 container"
-              exit 1
-            fi
-          fi
           if sudo docker container ls -a --filter name=stock-app | grep -q stock-app; then
             if ! sudo docker container rm stock-app; then
               echo "Failed to remove stock-app container"
@@ -162,7 +156,6 @@ jobs:
             echo "Failed to prune Docker images"
             exit 1
           fi
-    
 
     - name: Update Elastic Beanstalk environment
       run: |
